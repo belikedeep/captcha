@@ -17,6 +17,18 @@ const Home = () => {
         selectedIndexes,
       }),
       headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+      response.json().then((json) => {
+        if (json.sent) {
+          setCaptchaKey(new Date().getTime());
+          alert("message sent");
+          setMessage("");
+        }
+        if (!json.captchaIsOk) {
+          setCaptchaKey(new Date().getTime());
+          alert("wrong captcha. try again");
+        }
+      });
     });
   }
 
