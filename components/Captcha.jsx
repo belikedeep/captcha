@@ -1,6 +1,6 @@
 export default function Captcha() {
   const imageLocations = new Array(9).fill(null).map((value, index) => {
-    return `/api/captcha-image?index=${index}.png`;
+    return `/api/captcha-image?index=${index}`;
   });
   return (
     <div className="captcha">
