@@ -1,14 +1,36 @@
 import Captcha from "@/components/Captcha";
-import React from "react";
+import React, { useState } from "react";
 
 const Home = () => {
+  const [message, setMessage] = useState("");
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
+
+  function send() {
+    if (!message) {
+      alert("The message is required");
+      return;
+    }
+    fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify({
+        message,
+        selectedIndexes,
+      }),
+    });
+  }
+
   return (
     <main>
-      <input type="text" placeholder="Message" />
+      <input
+        type="text"
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Message"
+        value={message}
+      />
       <div>
-        <Captcha />
+        <Captcha onChange={setSelectedIndexes} />
       </div>
-      <button>Send</button>
+      <button onClick={send}>Send</button>
     </main>
   );
 };
