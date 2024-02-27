@@ -1,13 +1,30 @@
+import { useEffect, useState } from "react";
+
 export default function Captcha() {
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
   const imageLocations = new Array(9).fill(null).map((value, index) => {
     return `/api/captcha-image?index=${index}`;
   });
+
+  function toggleIndex(index) {
+    setSelectedIndexes((prev) => {
+      if (prev.includes(index)) {
+        return prev.filter((v) => v !== index);
+      } else {
+        return [...prev, index];
+      }
+    });
+  }
   return (
     <div className="captcha">
       <h2>Select all dogs:</h2>
       <div className="captcha-images">
-        {imageLocations.map((imageUrl) => (
-          <div>
+        {imageLocations.map((imageUrl, index) => (
+          <div
+            key={index}
+            onClick={() => toggleIndex(index)}
+            className={selectedIndexes.includes(index) ? "selected" : ""}
+          >
             <img src={imageUrl} alt="" />
           </div>
         ))}
