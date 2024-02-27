@@ -16,6 +16,7 @@ const Home = () => {
         message,
         selectedIndexes,
       }),
+      headers: { "Content-Type": "application/json" },
     });
   }
 
