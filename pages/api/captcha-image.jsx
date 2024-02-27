@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import { withIronSessionApiRoute } from "iron-session/next";
-import * as path from "path";
 
 const dogProbability = 0.5;
 export function newCaptchaImages() {
@@ -8,8 +7,7 @@ export function newCaptchaImages() {
     const shouldBeDog = Math.random() < dogProbability;
     const number = Math.floor(Math.random() * (shouldBeDog ? 10 : 13)) + 1;
     const filename = (shouldBeDog ? "dog" : "muffin") + number + ".png";
-    const imagesDirectory = path.join(process.cwd(), "public/dogs-and-muffins");
-    return `${imagesDirectory}/${filename}`;
+    return `./public/dogs-and-muffins/${filename}`;
   });
 }
 
