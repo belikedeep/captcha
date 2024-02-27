@@ -1,4 +1,5 @@
 import { withIronSessionApiRoute } from "iron-session/next";
+import { newCaptchaImages } from "./captcha-image";
 
 export default withIronSessionApiRoute(
   async function handler(req, res) {
@@ -11,6 +12,10 @@ export default withIronSessionApiRoute(
 
     const captchaIsOk =
       JSON.stringify(dogsIndexes) === JSON.stringify(selectedIndexes.sort());
+
+    // reset captcha images
+    req.session.captchaImages = newCaptchaImages();
+    await req.session.save();
 
     // send
     const sent = captchaIsOk;

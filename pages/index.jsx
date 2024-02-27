@@ -1,10 +1,12 @@
-import Captcha from "@/components/Captcha";
-import React, { useState } from "react";
+import Captcha from "../components/Captcha";
+import { useState } from "react";
+import { withIronSessionSsr } from "iron-session/next";
+import { newCaptchaImages } from "./api/captcha-image";
 
-const Home = () => {
+export default function Home({ defaultCaptchaKey }) {
   const [message, setMessage] = useState("");
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-
+  const [captchaKey, setCaptchaKey] = useState(defaultCaptchaKey);
   function send() {
     if (!message) {
       alert("The message is required");
@@ -31,7 +33,6 @@ const Home = () => {
       });
     });
   }
-
   return (
     <main>
       <input
@@ -41,11 +42,29 @@ const Home = () => {
         value={message}
       />
       <div>
-        <Captcha onChange={setSelectedIndexes} />
+        <Captcha captchaKey={captchaKey} onChange={setSelectedIndexes} />
       </div>
       <button onClick={send}>Send</button>
     </main>
   );
-};
+}
 
-export default Home;
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req }) => {
+    {
+      if (!req.session.captchaImages) {
+        req.session.captchaImages = newCaptchaImages();
+        await req.session.save();
+      }
+      return {
+        props: {
+          defaultCaptchaKey: new Date().getTime(),
+        },
+      };
+    }
+  },
+  {
+    cookieName: "session",
+    password: process.env.SESSION_SECRET,
+  }
+);

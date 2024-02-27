@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
-export default function Captcha({ onChange }) {
+export default function Captcha({ onChange, captchaKey }) {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-
   useEffect(() => {
     onChange(selectedIndexes);
   }, [selectedIndexes]);
+  useEffect(() => {
+    setSelectedIndexes([]);
+  }, [captchaKey]);
 
   const imageLocations = new Array(9).fill(null).map((value, index) => {
-    return `/api/captcha-image?index=${index}`;
+    return `/api/captcha-image?index=${index}&key=${captchaKey}`;
   });
-
   function toggleIndex(index) {
     setSelectedIndexes((prev) => {
       if (prev.includes(index)) {
