@@ -13,6 +13,7 @@ A modern, visually appealing contact form protected by a custom image-based capt
 ### New UI Preview 👇
 
 <!-- Replace with your latest screenshot -->
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/480a3bd3-1c58-4130-a709-085da08f98c2" />
 
 ## Getting Started
 
@@ -20,7 +21,7 @@ To get started, first clone the repository and install the npm dependencies:
 
 ```
 git clone https://github.com/belikedeep/custom-captcha.git
-cd captcha
+cd custom-captcha
 npm install
 ```
 
