@@ -35,13 +35,27 @@ export default function Home({ defaultCaptchaKey }) {
   }
   return (
     <main>
+      <h1>Send a Message</h1>
+      <p style={{ color: "#64748b", marginBottom: 18, fontSize: "1.08rem" }}>
+        Enter your message and solve the captcha to continue.
+      </p>
       <input
         type="text"
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Message"
+        placeholder="Type your message here..."
         value={message}
+        style={{ marginBottom: 18 }}
       />
-      <div>
+      <div
+        style={{
+          width: "100%",
+          marginBottom: 18,
+          background: "#f1f5f9",
+          borderRadius: 12,
+          boxShadow: "0 1px 4px rgba(99,102,241,0.04)",
+          padding: 12,
+        }}
+      >
         <Captcha captchaKey={captchaKey} onChange={setSelectedIndexes} />
       </div>
       <button onClick={send}>Send</button>
